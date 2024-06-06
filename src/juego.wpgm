@@ -1,8 +1,17 @@
 import wollok.game.*
-import pepita.*
+import personajes.*
 
 program juego {
 	game.title("Juego Base")
-	game.addVisual(pepita)
+
+	game.height(11)
+	game.width(11)
+	game.addVisual(naveDelJugador)
+	
+	keyboard.left().onPressDo {naveDelJugador.moverIzquierda()}
+	keyboard.right().onPressDo {naveDelJugador.moverDerecha()}
+	
+	
 	game.start()
+	
 }
