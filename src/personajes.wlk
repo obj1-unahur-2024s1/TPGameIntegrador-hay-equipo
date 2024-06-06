@@ -27,20 +27,41 @@ class NaveEnemiga {
 }
 
 object naveDelJugador {
-	var posicion = game.at(5,0)// cambiar 5 para que inicie en el centro 
-	method image() = "pepita.png"
+	var posicion = game.at(5,1)// cambiar 5 para que inicie en el centro 
+	method image() = "naveJugador.png"
 	
 	method position()= posicion
 	
 	method moverDerecha(){//mover una unidad a la derecha si se puede
-		if(self.position().x()< 10) {posicion = game.at(self.position().x()+1,self.position().y())}
+ //   if(self.position().x()< 10) {posicion = game.at(self.position().x()+1,self.position().y())}
+ 		posicion = game.at((self.position().x()+1).min(9),self.position().y())
 	}
 	
 	method moverIzquierda(){ // se mueve una celda a la izquierda si puede (no hay borde o nave a izquierda)
-		if(self.position().x()> 0) {posicion = game.at(self.position().x()-1,self.position().y())}
+ //   if(self.position().x()> 0) {posicion = game.at(self.position().x()-1,self.position().y())}
+		posicion = game.at((self.position().x()-1).max(1),self.position().y())
 	}
 	
 	method disparar() {// cada dos tiks dispara una bala aleatoria si no hay nave en  la misma columna y fila menor
 	}
 }
 	
+object bala {
+	var posicion = game.at(5,5)// cambiar 5 para que inicie en el centro 
+	method image() = "balaPlata.png"
+	
+	method position()= posicion
+	
+	
+}
+
+class Corazon {
+	const n
+	var posicion = game.at(n,0)
+	method image() = "vida.png"
+	method position()= posicion
+}
+
+const vida1 = new Corazon(n=1)
+const vida2 = new Corazon(n=2)
+const vida3 = new Corazon(n=3)

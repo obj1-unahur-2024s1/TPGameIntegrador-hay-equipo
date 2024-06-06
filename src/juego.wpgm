@@ -6,7 +6,13 @@ program juego {
 
 	game.height(11)
 	game.width(11)
+	game.boardGround("fondo.png")
+
+
 	game.addVisual(naveDelJugador)
+	game.addVisual(vida1)
+	game.addVisual(vida2)
+	game.addVisual(vida3)
 	
 	keyboard.left().onPressDo {naveDelJugador.moverIzquierda()}
 	keyboard.right().onPressDo {naveDelJugador.moverDerecha()}
