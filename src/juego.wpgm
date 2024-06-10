@@ -7,20 +7,17 @@ program juego {
 	game.height(11)
 	game.width(11)
 	game.boardGround("fondo.png")
-	/*
-	 	Poner una fila de aliens
-	 	* 3 aliens por fila
-	 	* L
-	 	* 	
-	  */
 
 	game.addVisual(naveDelJugador)
 	game.addVisual(vida1)
 	game.addVisual(vida2)
 	game.addVisual(vida3)
-	aparecerEnemigos.aparecerAliens(10)
-	aparecerEnemigos.aparecerAliens(9)
-	aparecerEnemigos.aparecerAliens(8)
+	game.addVisual(bala)
+	game.onTick(1000,"Avanza bala", {bala.desplazar()})
+	game.onTick(2000,"Avanzar Enemigos", {aparecerEnemigos.generarAliensEnFila(10)}) //Falta hacer que los
+	//enemigos avancen y se muevan horizontalmente.
+	 
+	
 	
 	keyboard.left().onPressDo {naveDelJugador.moverIzquierda()}
 	keyboard.right().onPressDo {naveDelJugador.moverDerecha()}

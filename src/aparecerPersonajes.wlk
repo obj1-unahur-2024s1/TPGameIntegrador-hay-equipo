@@ -1,5 +1,6 @@
 import naves.*
 import wollok.game.*
+
 object ciclo{
 	method for(inicio, fin, accion){
 		//accion es un closure que describe al bloque de codigo dentro del
