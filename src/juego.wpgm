@@ -1,35 +1,8 @@
 import wollok.game.*
 import personajes.*
+import juego.*
 
 program juego {
-	
-	const enemigos=[]
-	
-	game.title("Juego Base")
-
-	game.height(11)
-	game.width(11)
-	game.boardGround("fondo.png")
-
-	game.addVisual(naveDelJugador)
-	game.addVisual(vida1)
-	game.addVisual(vida2)
-	game.addVisual(vida3)
-	
-
-	aparecerEnemigos.generarEnemigos()
-	enemigos.addAll(aparecerEnemigos.enemigos() )
-
-	game.onTick(5000, "bajar Enemigos", {enemigos.forEach({ e => e.bajar()})})
-	game.onTick(5000, "mover Enemigos", {enemigos.forEach({ e => e.mover()})})
-
-
-	
-	keyboard.left().onPressDo {naveDelJugador.moverIzquierda()}
-	keyboard.right().onPressDo {naveDelJugador.moverDerecha()}
-	keyboard.up().onPressDo {bala.disparar(naveDelJugador)}
-	
-	
-	game.start()
+	juego.iniciar()
 	
 }

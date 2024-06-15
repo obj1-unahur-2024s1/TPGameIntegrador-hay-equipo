@@ -1,4 +1,5 @@
 import wollok.game.*
+import juego.*
 
 
 class Personaje {
@@ -10,13 +11,8 @@ class Personaje {
 		return game.getObjectsIn(posicion.up(1)).isEmpty() and posicion.y() < game.height()-2
 	}
 	
-	method subir(){
-		if (self.puedeSubir()){self.posicion(posicion.up(1))}
-		else {self.desaparecer()}
-	}
-	
 	method puedeBajar(){
-		return game.getObjectsIn(posicion.down(1)).isEmpty() and posicion.y() > 1
+		return  posicion.y() > 1
 	}
 	
 	method bajar(){
@@ -42,9 +38,11 @@ class Personaje {
 		game.addVisual(self)
 	}	
 	
-	method desaparecer(){
+	method morir(){
 		game.removeVisual(self)
+		
 	}
+	
 }
 
 
@@ -112,48 +110,6 @@ class NaveDelJugador inherits Personaje {
 
 const naveDelJugador  = new NaveDelJugador(posicion = game.at(5,1))	
 	
-class Bala inherits Personaje {
-	const esPropia
-//	var fotograma = if (esPropia) 1 else 3 
-
-	method image()= "bala2.png"
-
-
-/*	
- * 	method siguienteFotograma(){
-		if (esPropia)  fotograma = (fotograma + 1 ) % 3
-		else fotograma = (fotograma - 1 ) % 3
-	}
- * method image(){return "bala" + fotograma.toString()+ ".png"}
- * method animacion(){
-		game.onTick(300, "desplazamiento",{ self.siguienteFotograma()} )
-	}
-	
- 	
-
-*/
-	method disparar(naveDelJugador){
-		posicion = game.at(naveDelJugador.posicion().x(),naveDelJugador.posicion().y()+1)
-		self.aparecer()
-		self.desplazar()
-		}
-		
-	method desplazar(){
-		if(esPropia) 
-			{game.onTick(500,"bala Baja", {self.subir()})}
-			
-		else
-			{game.onTick(900,"bala Baja",{self.bajar()})}	
-		}
-	
-		
-	}
-	
-	
-	
-
-
-const bala = new Bala(posicion = game.at(2,2),esPropia=true) 
 
 
 class Corazon {
