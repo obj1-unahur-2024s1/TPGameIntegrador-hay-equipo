@@ -2,6 +2,9 @@ import wollok.game.*
 import personajes.*
 
 program juego {
+	
+	const enemigos=[]
+	
 	game.title("Juego Base")
 
 	game.height(11)
@@ -12,15 +15,19 @@ program juego {
 	game.addVisual(vida1)
 	game.addVisual(vida2)
 	game.addVisual(vida3)
-	game.addVisual(bala)
-	game.onTick(1000,"Avanza bala", {bala.desplazar()})
-	game.onTick(2000,"Avanzar Enemigos", {aparecerEnemigos.generarAliensEnFila(10)}) //Falta hacer que los
-	//enemigos avancen y se muevan horizontalmente.
-	 
 	
+
+	aparecerEnemigos.generarEnemigos()
+	enemigos.addAll(aparecerEnemigos.enemigos() )
+
+	game.onTick(5000, "bajar Enemigos", {enemigos.forEach({ e => e.bajar()})})
+	game.onTick(5000, "mover Enemigos", {enemigos.forEach({ e => e.mover()})})
+
+
 	
 	keyboard.left().onPressDo {naveDelJugador.moverIzquierda()}
 	keyboard.right().onPressDo {naveDelJugador.moverDerecha()}
+	keyboard.up().onPressDo {bala.disparar(naveDelJugador)}
 	
 	
 	game.start()

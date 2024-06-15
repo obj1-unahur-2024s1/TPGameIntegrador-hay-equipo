@@ -1,54 +1,6 @@
 import wollok.game.*
 
 
-
-object aparecerEnemigos{
-	method listaDePosiciones()=[1,2,3,4,5,6,7,8]
-	
-	method generarAliensEnFila(fila){
-		//Codigo a emprolijar
-		
-		var listaDePosiciones2 = self.listaDePosiciones()
-		
-		const x = listaDePosiciones2.anyOne()
-		const position = game.at(x, fila)
-		listaDePosiciones2.remove(x)
-		const nave1 = new NaveEnemiga(posicion = position)
-		nave1.aparecer
-		
-		const x = listaDePosiciones2.anyOne()
-		const position = game.at(x, fila)
-		listaDePosiciones2.remove(x)
-		const nave2 = new NaveEnemiga(posicion = position)
-		nave2.aparecer()
-		
-		const x = listaDePosiciones2.anyOne()
-		const  position = game.at(x, fila)
-		listaDePosiciones2.remove(x)
-		const nave3 = new NaveEnemiga(posicion = position)
-		nave3.aparecer()
-		
-	}
-
-	
-	method generarAlien(){
-		
-	}
-	//Fila 10
-	
-	//Fila 9
-	//Fila 8
-	//Fila 7
-	//Fila 6
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	
-}
-
 class Personaje {
 	var property posicion
 	
@@ -60,6 +12,7 @@ class Personaje {
 	
 	method subir(){
 		if (self.puedeSubir()){self.posicion(posicion.up(1))}
+		else {self.desaparecer()}
 	}
 	
 	method puedeBajar(){
@@ -117,13 +70,43 @@ class NaveEnemiga inherits Personaje {
 
 }
 
+object aparecerEnemigos{
+	const enemigos =[]
+	
+	method enemigos()=enemigos 
+	method listaDePosiciones()=[1,2,3,4,5,6,7,8]
+	
+	method generarAliensEnFila(fila){
+		
+		const lista= self.listaDePosiciones()
+		
+		const x = lista.anyOne()
+		enemigos.add(new NaveEnemiga(posicion = game.at(x, fila)))
+		lista.remove(x)
+		
+		const y = lista.anyOne()
+		enemigos.add(new NaveEnemiga(posicion = game.at(y, fila)))
+		lista.remove(y)
+		
+		const z = lista.anyOne()
+		enemigos.add(new NaveEnemiga(posicion = game.at(z, fila)))
+		}
+	
+	method generarEnemigos(){
+		self.generarAliensEnFila(10)
+		self.generarAliensEnFila(9)
+		self.generarAliensEnFila(8)
+		self.generarAliensEnFila(7)
+		enemigos.forEach{e=>e.aparecer()}
+	}
+	
+}
+
 
 class NaveDelJugador inherits Personaje {
 	var property vida = 3
 
 	method image() = "naveJugador.png"
-
-	method disparar() {}// cada dos tiks dispara una bala aleatoria si no hay nave en  la misma columna y fila menor
 
 }
 
@@ -131,28 +114,44 @@ const naveDelJugador  = new NaveDelJugador(posicion = game.at(5,1))
 	
 class Bala inherits Personaje {
 	const esPropia
-	var fotograma = if (esPropia) 1 else 3 
-	const  velocidad =10
+//	var fotograma = if (esPropia) 1 else 3 
 
-	method siguienteFotograma() {
-		if (esPropia) fotograma = 3.max(fotograma + 1) else fotograma = fotograma - 1.min(fotograma - 1) 
+	method image()= "bala2.png"
+
+
+/*	
+ * 	method siguienteFotograma(){
+		if (esPropia)  fotograma = (fotograma + 1 ) % 3
+		else fotograma = (fotograma - 1 ) % 3
+	}
+ * method image(){return "bala" + fotograma.toString()+ ".png"}
+ * method animacion(){
+		game.onTick(300, "desplazamiento",{ self.siguienteFotograma()} )
 	}
 	
-	method image()="bala2.png"
-//	method image(){return "bala" + fotograma.toDoString()+ ".png"}
+ 	
 
-//	method animacion(){
-//		game.onTick(velocidad, "desplazamiento",{ self.siguienteFotograma()} )
-//	}
-	
+*/
+	method disparar(naveDelJugador){
+		posicion = game.at(naveDelJugador.posicion().x(),naveDelJugador.posicion().y()+1)
+		self.aparecer()
+		self.desplazar()
+		}
+		
 	method desplazar(){
 		if(esPropia) 
-			game.onTick(100,"balaSube",{self.subir()})
+			{game.onTick(500,"bala Baja", {self.subir()})}
+			
 		else
-			game.onTick(100,"balaSube",{self.bajar()})
+			{game.onTick(900,"bala Baja",{self.bajar()})}	
+		}
+	
+		
 	}
+	
+	
+	
 
-}
 
 const bala = new Bala(posicion = game.at(2,2),esPropia=true) 
 
