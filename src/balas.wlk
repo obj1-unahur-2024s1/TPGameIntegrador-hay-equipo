@@ -9,7 +9,7 @@ class Bala {
 	
 	method disparar(){
 		
-		game.onTick(250, "Avanza bala", {self.subir()})
+		game.onTick(50, "Avanza bala", {self.subir()})
 		
 	}
 	
@@ -29,12 +29,14 @@ class Bala {
 		self.disparar()
 	}
 	
-	method desaparecer(){
+	method morir(){
 		game.removeVisual(self)
 		game.removeTickEvent("Avanza bala")
 	}
 	
 	method impactar(){
-		  game.onCollideDo(self, {elemento => elemento.morir(); self.desaparecer()})
+		  game.onCollideDo(self, {elemento => elemento.morir()})
 	}
+	
+	method perderUnaVida(){}
 }

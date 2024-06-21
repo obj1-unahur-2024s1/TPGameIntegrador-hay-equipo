@@ -17,6 +17,7 @@ class Personaje {
 	
 	method bajar(){
 		if (self.puedeBajar()){self.posicion(posicion.down(1))}
+		else juego.terminar()
 	}
 	
 	method puedeMoverDerecha(){
@@ -37,12 +38,8 @@ class Personaje {
 	method aparecer(){
 		game.addVisual(self)
 	}	
-	
-	method morir(){
-		game.removeVisual(self)
-		
-	}
-	
+	method perderUnaVida(){}
+
 }
 
 
@@ -64,6 +61,12 @@ class NaveEnemiga inherits Personaje {
 	
 	method moverHorizontalmente(direccion){
 		 if (direccion == 1) self.moverDerecha() else self.moverIzquierda()	
+	}
+	
+	 method morir(){
+		juego.enemigos().remove(self)
+		game.removeVisual(self)
+		juego.puntaje(juego.puntaje() + 20)		
 	}
 
 }
@@ -102,24 +105,48 @@ object aparecerEnemigos{
 
 
 class NaveDelJugador inherits Personaje {
-	var property vida = 3
+	var property vidas = 3
 
 	method image() = "naveJugador.png"
+	
+	method perderVida(){
+		self.perderUnaVida()
+	}
+	
+	override method perderUnaVida(){
+		if(vidas>1) vidas -= 1 else self.morir()  
+		game.say(self, "me queda" + vidas.toString() + "vidas" )
+	}	
+	
+	method morir(){
+		
+	}
 
+	
 }
-
-const naveDelJugador  = new NaveDelJugador(posicion = game.at(5,1))	
 	
 
 
+const naveDelJugador  = new NaveDelJugador(posicion = game.at(5,1))	
+	
+/*class Meteorito inherits Personaje {
+	var posicion = 
+}
+*/
 class Corazon {
 	const n
 	const posicion = game.at(n,0)
 	method image() = "vida.png"
 	method position()= posicion
+	method aparecer()=game.addVisual(self)
 }
 
-const vida1 = new Corazon(n=1)
-const vida2 = new Corazon(n=2)
-const vida3 = new Corazon(n=3)
+object aparecerVidas{
+	const property vidas =[new Corazon(n=1),new Corazon(n=2), new Corazon(n=3)]
+	
+	method cargarVidas(){
 
+			vidas.forEach({v=>v.aparecer()})
+	}
+
+}
