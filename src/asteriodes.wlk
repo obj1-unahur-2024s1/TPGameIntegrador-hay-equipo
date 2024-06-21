@@ -1,6 +1,7 @@
 import wollok.game.*
 import juego.*
 
+
 class Asteroide {
 	var property position 
 	
@@ -32,8 +33,6 @@ class Asteroide {
 	method morir(){} //para que no le pase nada
 	
 	method perderUnaVida(){}
-
-	
 	
 }
 
@@ -49,4 +48,6 @@ object 	aparecerAsteroides {
 	}
 		
 }
+
+
 	

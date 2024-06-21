@@ -22,12 +22,7 @@ object juego {
 	method iniciar(){		
 	
 		self.tablero()
-		self.cargarControles()
-//		self.cargarSonido()
-		self.cargarUsuario()
-		self.modelarEnemigos()
-		self.agregarAsteroides()
-		self.cargarVidas()
+		escenas.menuPrincipal()
 //		game.onCollideDo(naveDelJugador, {naveDelJugador.perderVida() ; self.removerVida()})
 		game.start()
 	
@@ -62,6 +57,7 @@ object juego {
 		
 		game.onTick(4000, "bajar Enemigos", {enemigos.forEach({ e => e.bajar()})})
 		game.onTick(1000, "mover Enemigos", {enemigos.forEach({ e => e.mover()})})
+		game.onTick(1000,"disparar enemigo", {self.dispararEnemigo()})
 		
 	}
 	
@@ -94,6 +90,8 @@ object juego {
 	method terminar(){
 		self.limpiar()
 		img = "gameover.png"
+		//game.addVisual(self.puntaje().toString())
+		game.addVisual(new Texto(text = self.puntaje().toString(), position = game.at(5,7)))
 		
 	}
 	
@@ -117,5 +115,72 @@ object juego {
 		
 	}
 	
+	method limpiarTablero(){
+		game.clear()
+	}
+	
+
+	method dispararEnemigo(){
+		const enemigo = enemigos.anyOne()
+		game.addVisual(new BalaEnemiga(position = game.at(enemigo.position().x(), enemigo.position().y()-1)))
+	}
+}
+
+object escenas {
+	
+	method menuPrincipal(){
+		game.addVisual(new Texto(text = "pulsa 1 para ir al primer nivel", position = game.at(5,6)))
+		game.addVisual(new Texto(text = "pulsa 2 para ir al segundo nivel", position = game.at(5,5)))
+		game.addVisual(new Texto(text = "pulsa P para ver el tutorial", position = game.at(5,4)))
+		game.addVisual(new Texto(text = "pulsa Esc para salir", position = game.at(5,3)))
+		
+		keyboard.num1().onPressDo{juego.limpiarTablero(); self.primerNivel()}
+		keyboard.num2().onPressDo{juego.limpiarTablero(); self.segundoNivel()}
+		keyboard.p().onPressDo {juego.limpiarTablero(); self.tutorial()}
+		keyboard.backspace().onPressDo {game.stop()}
+	}
+	
+	method primerNivel(){
+		juego.cargarControles()
+//		self.cargarSonido()
+		juego.cargarUsuario()
+		juego.modelarEnemigos()
+		juego.cargarVidas()
+	}
+	
+	method segundoNivel(){
+		juego.cargarControles()
+//		self.cargarSonido()
+		juego.cargarUsuario()
+		juego.modelarEnemigos()
+		juego.agregarAsteroides()
+		juego.cargarVidas()
+	}
+	
+	method tutorial(){
+		game.addVisual(new Texto(text = "debes eliminar a las naves enemigas antes de que sobrepasen a la tuya", position = game.at(5,10)))
+		game.addVisual(new Texto(text = "usa las flechas para moverte", position = game.at(5,8)))
+		game.addVisual(new Texto(text = "pulsa Espacio para disparar", position = game.at(5,7)))
+		game.addVisual(new Texto(text = "pulsa back space para volver al menu", position = game.at(5,6)))
+		
+		keyboard.c().onPressDo {juego.limpiarTablero(); self.menuPrincipal()}
+	}
+	
+	method perdiste(){
+		juego.limpiarTablero()
+		game.boardGround("gameover.png")
+		keyboard.c().onPressDo {juego.limpiarTablero(); self.menuPrincipal()}
+	}
+}
+
+class Texto {
+	const property text
+	const property position
+	const property textColor = color.rojo()
+}
+
+object color {
+	const property verde = "00FF00F"
+	const property rojo = "FF0000FF"
 }
 

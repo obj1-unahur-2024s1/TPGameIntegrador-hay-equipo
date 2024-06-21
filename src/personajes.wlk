@@ -45,7 +45,7 @@ class Personaje {
 
 class NaveEnemiga inherits Personaje {
 	var property vida = 1
-	
+	const property puedeMorir = true
 	method image() = "nave_3.png"
 
 	method explotar(){//si es enemigo al recibir una bala explota y desaparece 
@@ -57,6 +57,11 @@ class NaveEnemiga inherits Personaje {
 		const direccion = direcciones.anyOne()
 		//llama a mover moverDerecha() si sale 1 o moverIzquierda() 2 y 0 no se mueve
 		 if (direccion!=0){self.moverHorizontalmente(direccion)}
+	}
+	
+	override method bajar(){
+		super()
+		if(self.position().y() == 1){juego.terminar()}
 	}
 	
 	method moverHorizontalmente(direccion){
@@ -119,7 +124,8 @@ class NaveDelJugador inherits Personaje {
 	}	
 	
 	method morir(){
-		
+		//escenas.perdiste()
+		juego.terminar()
 	}
 
 	

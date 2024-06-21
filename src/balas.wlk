@@ -1,10 +1,11 @@
 import wollok.game.*
 import personajes.*
-
+import asteriodes.*
+import juego.*
 
 class Bala {
 	//var bala
-	var property position = game.at(naveDelJugador.position().x(), 2)
+	var property position = game.at(naveDelJugador.position().x(), 1)
 	method image() = "bala..png"
 	
 	method disparar(){
@@ -22,7 +23,7 @@ class Bala {
 	}
 	
 	method puedeSubir(){
-		return game.getObjectsIn(position.up(1)).isEmpty() and position.y() < game.height()-2
+		return game.getObjectsIn(position.up(1)).isEmpty() or position.y() > game.height()-2
 	}
 	
 	method initialize(){
@@ -34,9 +35,61 @@ class Bala {
 		game.removeTickEvent("Avanza bala")
 	}
 	
+	
 	method impactar(){
-		  game.onCollideDo(self, {elemento => elemento.morir()})
+		  //game.onCollideDo(self, {elemento => elemento.morir(); self.morir()})
+		  game.onCollideDo(self, {elemento => if(elemento.puedeMorir()){elemento.morir(); self.morir()}})
 	}
 	
 	method perderUnaVida(){}
+}
+
+class BalaEnemiga {
+	var property position
+	const property puedeMorir = false // determina si puede morir o no
+	
+	method image() = "bala..png"
+	
+	method disparar(){
+		
+		game.onTick(500, "Avanza bala enemiga", {self.bajar()})
+		
+	}
+	
+	method bajar(){
+		if (self.puedeBajar()){
+			self.position(position.down(1))
+			self.impactaSiHayNave()	
+			}
+		else{ 
+			//self.desaparecer()
+			game.removeVisual(self)
+			game.removeTickEvent("Avanza bala enemiga")
+			
+		}
+	}
+	
+	method puedeBajar(){
+		return position.y()>1 
+		
+	}
+	
+	method initialize(){
+		self.disparar()
+	}
+	
+	method desaparecer(){
+		game.removeVisual(self)
+		game.removeTickEvent("Avanza bala")
+	}
+	
+	method morir(){}
+	
+	method impactaSiHayNave(){
+		if (position.y() == 1 and game.getObjectsIn(position).size()>1){
+			juego.removerVida()
+		}
+	}
+	
+
 }
