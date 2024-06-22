@@ -59,6 +59,7 @@ object juego {
 		game.onTick(4000, "bajar Enemigos", {enemigos.forEach({ e => e.bajar()})})
 		game.onTick(1000, "mover Enemigos", {enemigos.forEach({ e => e.mover()})})
 		game.onTick(2000,"disparar enemigo", {self.dispararEnemigo()})
+		game.onTick(500, "eliminar muertos",{enemigos.forEach({e =>e.eliminarRestos()})})
 		
 	}
 	
@@ -112,7 +113,12 @@ object juego {
 		game.removeVisual(vidas.last())
 		vidas.remove(vidas.last())
 		game.sound("sonido/perder.mp3").play()
+		self.cambiarVisualDelJugador()
 		
+	}
+	
+	method cambiarVisualDelJugador(){
+		if (self.vidas() == 2) naveDelJugador.img("n2.png") else naveDelJugador.img("n3.png") 
 	}
 	
 	method limpiarTablero(){

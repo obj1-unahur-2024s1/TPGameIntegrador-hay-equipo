@@ -39,6 +39,9 @@ class Personaje {
 	method aparecer(){
 		game.addVisual(self)
 	}	
+	method desaparecer(){
+		game.removeVisual(self)
+	}
 	method perderUnaVida(){}
 
 }
@@ -47,6 +50,7 @@ class Personaje {
 class NaveEnemiga inherits Personaje {
 	const property puedeMorir = true
 	var property  img =  "nave_3.png"
+	var property muerto = false
 	method image() = img
 	
 	
@@ -68,12 +72,21 @@ class NaveEnemiga inherits Personaje {
 	}
 	
 	 method morir(){
-		juego.enemigos().remove(self)
-		game.removeVisual(self)
+	 	self.img("exp1.png")
 		juego.puntaje(juego.puntaje() + 20)
 		score.puntaje(juego.puntaje() +20)
-		juego.terminarSiCorresponde()
+		self.muerto(true)
 
+
+	}
+	
+	
+	method eliminarRestos(){
+		if(self.muerto()){
+			juego.enemigos().remove(self)
+			self.desaparecer()
+			juego.terminarSiCorresponde()
+	}
 	}
 
 }
@@ -110,17 +123,17 @@ object aparecerEnemigos{
 	
 }
 
-
 class NaveDelJugador inherits Personaje {
+	var property img ="n1.png"
 
 
-	method image() = "naveJugador.png"
-	
+	method image() = img
 	
 	method morir(){}
 
 	
 }
+	
 	
 
 
