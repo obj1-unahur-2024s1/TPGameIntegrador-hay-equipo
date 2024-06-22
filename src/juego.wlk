@@ -57,7 +57,7 @@ object juego {
 		
 		game.onTick(4000, "bajar Enemigos", {enemigos.forEach({ e => e.bajar()})})
 		game.onTick(1000, "mover Enemigos", {enemigos.forEach({ e => e.mover()})})
-		game.onTick(3000,"disparar enemigo", {self.dispararEnemigo()})
+		game.onTick(2000,"disparar enemigo", {self.dispararEnemigo()})
 		
 	}
 	
