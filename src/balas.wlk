@@ -7,6 +7,7 @@ class Bala {
 	//var bala
 	var property position = game.at(naveDelJugador.position().x(), 1)
 	method image() = "bala..png"
+	method puedeMorir() = true
 	
 	method disparar(){
 		
@@ -31,23 +32,24 @@ class Bala {
 	}
 	
 	method morir(){
-		game.removeVisual(self)
 		game.removeTickEvent("Avanza bala")
+		game.removeVisual(self)
 	}
 	
 	
 	method impactar(){
 		  //game.onCollideDo(self, {elemento => elemento.morir(); self.morir()})
-		  game.onCollideDo(self, {elemento => if(elemento.puedeMorir()){elemento.morir(); self.morir()}})
+		  game.onCollideDo(self, {elemento => if(elemento.puedeMorir()){elemento.morir()}; self.morir()})
 	}
 	
 	method perderUnaVida(){}
+	
 }
 
 class BalaEnemiga {
 	var property position
 	const property puedeMorir = false // determina si puede morir o no
-	
+	method puedeMorir() = false
 	method image() = "bala..png"
 	
 	method disparar(){
@@ -63,8 +65,8 @@ class BalaEnemiga {
 			}
 		else{ 
 			//self.desaparecer()
-			game.removeVisual(self)
 			game.removeTickEvent("Avanza bala enemiga")
+			game.removeVisual(self)
 			
 		}
 	}
@@ -79,8 +81,8 @@ class BalaEnemiga {
 	}
 	
 	method desaparecer(){
-		game.removeVisual(self)
 		game.removeTickEvent("Avanza bala")
+		game.removeVisual(self)
 	}
 	
 	method morir(){}

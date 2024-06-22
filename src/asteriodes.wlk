@@ -7,6 +7,8 @@ class Asteroide {
 	
 	method image() = "ast.png"
 	
+	method puedeMorir() = false
+	
 //	method initialize(){
 //		self.desplazar()	}
 	

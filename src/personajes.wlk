@@ -44,13 +44,11 @@ class Personaje {
 
 
 class NaveEnemiga inherits Personaje {
-	var property vida = 1
 	const property puedeMorir = true
-	method image() = "nave_3.png"
-
-	method explotar(){//si es enemigo al recibir una bala explota y desaparece 
-	//si es la nave del jugador explota y termina el juego
-	}
+	var property  img =  "nave_3.png"
+	method image() = img
+	
+	
 
 	method mover(){
 		const direcciones = [0,1,2]
@@ -72,6 +70,8 @@ class NaveEnemiga inherits Personaje {
 		juego.enemigos().remove(self)
 		game.removeVisual(self)
 		juego.puntaje(juego.puntaje() + 20)		
+		juego.terminarSiCorresponde()
+
 	}
 
 }
@@ -110,23 +110,12 @@ object aparecerEnemigos{
 
 
 class NaveDelJugador inherits Personaje {
-	var property vidas = 3
+
 
 	method image() = "naveJugador.png"
 	
-	method perderVida(){
-		self.perderUnaVida()
-	}
 	
-	override method perderUnaVida(){
-		if(vidas>1) vidas -= 1 else self.morir()  
-		game.say(self, "me queda" + vidas.toString() + "vidas" )
-	}	
-	
-	method morir(){
-		//escenas.perdiste()
-		juego.terminar()
-	}
+	method morir(){}
 
 	
 }
