@@ -1,5 +1,6 @@
 import wollok.game.*
 import juego.*
+import score.*
 
 
 class Personaje {
@@ -69,7 +70,8 @@ class NaveEnemiga inherits Personaje {
 	 method morir(){
 		juego.enemigos().remove(self)
 		game.removeVisual(self)
-		juego.puntaje(juego.puntaje() + 20)		
+		juego.puntaje(juego.puntaje() + 20)
+		score.puntaje(juego.puntaje() +20)
 		juego.terminarSiCorresponde()
 
 	}

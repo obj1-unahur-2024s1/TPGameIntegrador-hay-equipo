@@ -3,6 +3,7 @@ import pantallas.*
 import personajes.*
 import balas.*
 import asteriodes.*
+import score.*
 
 
 
@@ -90,9 +91,9 @@ object juego {
 	method terminar(){
 		self.limpiar()
 		self.agregarVisualFinal()
-		game.addVisual(new Texto(text = self.puntaje().toString(),
-			 position = game.center()))
-			 
+		//game.addVisual(new Texto(text = self.puntaje().toString(),
+		//	 position = game.center()))
+		score.addVisual()	 
 	}
 	
 	method agregarVisualFinal(){
