@@ -48,7 +48,6 @@ object 	aparecerAsteroides {
 	method generarAsteriodes(){
 		asteroides.forEach{e=>e.aparecer()}
 	}
-		
 }
 
 

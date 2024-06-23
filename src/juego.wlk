@@ -202,19 +202,3 @@ object escenas {
 	
 
 }
-
-class Texto {
-	const property text
-	const property position
-	const property textColor = color.verde()
-	
-	
-}
-
-object color {
-	const property verde = "00FF00F"
-	const property rojo = "FF0000FF"
-}
-
-
-

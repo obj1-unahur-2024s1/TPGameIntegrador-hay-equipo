@@ -1,6 +1,49 @@
-
-test "testX" {
-
-	assert.that(true)
-
+import asteriodes.*
+import balas.*
+import juego.*
+//import niveles.*
+import pantallas.*
+import personajes.*
+import wollok.game.*
+describe "Test del juego"{
+	
+	
+	method initialize (){
+		game.clear()
+	}
+	
+	test "Testeo de pantalla de inicio, aun no se carga la nave"{
+		escenas.pantallaInicio()
+		assert.that(game.hasVisual(inicio))
+		assert.notThat(game.hasVisual(naveDelJugador))
+	}
+	test "Se inicia el juego con 12 enemigos"{
+		escenas.primerNivel()
+		assert.equals(12, juego.enemigos().size())
+	}
+	test "Pasa del menu al nivel 1"{
+		escenas.menuPrincipal()
+		assert.that(game.hasVisual(menu))
+		assert.equals(juego.enemigos().size(), 0)
+		juego.limpiarTablero(); escenas.primerNivel()
+		//Se crean enemigos, la nave del jugador
+		assert.that(juego.enemigos().size() > 0)
+		assert.that(game.hasVisual(naveDelJugador))
+		assert.equals(0, juego.asteroides().size())
+	}
+	test "Se puede mover a la izquierda la nave de jugador"{
+		const posAnterior = naveDelJugador.position()
+		naveDelJugador.moverIzquierda()
+		assert.equals(posAnterior.left(1), naveDelJugador.position())
+	}/*
+	 * 
+	test "Se puede mover a la derecha la nave del jugador"{
+		
+		const posAnterior = naveDelJugador.position()
+		assert.equals(5, naveDelJugador.position().x())
+		naveDelJugador.moverDerecha()
+		assert.equals(6, naveDelJugador.position().x())
+	}
+	 */
+	
 }

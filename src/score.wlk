@@ -5,8 +5,7 @@ class Caracter {
 	
 	// indica si ese objeto provoca daño cuando colisiona con felix
 	const property haceDanio = false
-	
-	
+
 	method position() = position
 	method position(nuevaPosicion) {
 		position = nuevaPosicion		
@@ -26,7 +25,6 @@ class Caracter {
 			game.removeVisual(self)		
 		}
 	}
-	
 }
 
 class Visual inherits Caracter {
