@@ -40,7 +40,9 @@ class Personaje {
 		game.addVisual(self)
 	}	
 	method desaparecer(){
-		game.removeVisual(self)
+		if(game.hasVisual(self)){
+			game.removeVisual(self)			
+		}
 	}
 	method perderUnaVida(){}
 
@@ -72,12 +74,12 @@ class NaveEnemiga inherits Personaje {
 	}
 	
 	 method morir(){
-	 	self.img("exp1.png")
-		juego.puntaje(juego.puntaje() + 20)
-		score.puntaje(juego.puntaje() +20)
+	 	self.img("exp1.PNG")
+	 	const sumaPuntaje = juego.puntaje() + 20
+		juego.puntaje(sumaPuntaje)
+		scoreFinal.puntaje(sumaPuntaje)
+		scoreJuego.puntaje(sumaPuntaje)
 		self.muerto(true)
-
-
 	}
 	
 	
@@ -86,7 +88,7 @@ class NaveEnemiga inherits Personaje {
 			juego.enemigos().remove(self)
 			self.desaparecer()
 			juego.terminarSiCorresponde()
-	}
+		}
 	}
 
 }
@@ -130,6 +132,13 @@ class NaveDelJugador inherits Personaje {
 	method image() = img
 	
 	method morir(){}
+	
+	override method puedeMoverDerecha(){
+		return posicion.x() <game.width()-2
+	}
+	override method puedeMoverIzquierda(){
+		return posicion.x() > 1
+	}
 
 	
 }
@@ -150,9 +159,10 @@ class Corazon {
 	method position()= posicion
 	method aparecer()=game.addVisual(self)
 }
-
+/*
+ * 
 object aparecerVidas{
-	const property vidas =[new Corazon(n=1),new Corazon(n=2), new Corazon(n=3)]
+	//const property vidas =[new Corazon(n=1),new Corazon(n=2), new Corazon(n=3)]
 	
 	method cargarVidas(){
 
@@ -160,3 +170,4 @@ object aparecerVidas{
 	}
 
 }
+ */

@@ -9,12 +9,14 @@ import score.*
 
 object juego {
 	
+	
 	const property enemigos=[]
 	const property asteroides = []
 	const property vidas = []
 	var property puntaje = 0
 	method vidas()=vidas.size()
 	
+	method vidasTotales()= [new Corazon(n=1),new Corazon(n=2), new Corazon(n=3)]
 
 	method puntaje()=puntaje
 
@@ -52,9 +54,9 @@ object juego {
 	}
 	
 	method modelarEnemigos(){
-
+		self.enemigos().removeAll(enemigos)
 		aparecerEnemigos.generarEnemigos()
-		enemigos.addAll(aparecerEnemigos.enemigos() )
+		enemigos.addAll(aparecerEnemigos.enemigos())
 		
 		game.onTick(4000, "bajar Enemigos", {enemigos.forEach({ e => e.bajar()})})
 		game.onTick(1000, "mover Enemigos", {enemigos.forEach({ e => e.mover()})})
@@ -68,12 +70,6 @@ object juego {
 
 	}
 	
-	method cargarVidas(){
-		aparecerVidas.cargarVidas()
-		vidas.addAll(aparecerVidas.vidas())
-
-		
-	}
 	method agregarAsteroides(){
 		
 		aparecerAsteroides.generarAsteriodes()
@@ -90,18 +86,18 @@ object juego {
 	
 	
 	method terminar(){
-		self.limpiar()
+		//Termina si nos matan
+		self.limpiarTablero()
 		self.agregarVisualFinal()
 		//game.addVisual(new Texto(text = self.puntaje().toString(),
 		//	 position = game.center()))
-		score.addVisual()	 
+		scoreFinal.addVisual()
+		
+		
 	}
 	
 	method agregarVisualFinal(){
 		if(not enemigos.isEmpty()) game.addVisual(gameOver) else game.addVisual(ganaste)
-	}
-	method limpiar(){
-		game.clear()
 	}
 
 	method removerVida(){
@@ -123,18 +119,31 @@ object juego {
 	
 	method limpiarTablero(){
 		game.clear()
+		
 	}
 	
-
 	method dispararEnemigo(){
 		const enemigo = enemigos.anyOne()
 		game.addVisual(new BalaEnemiga(position = game.at(enemigo.position().x(), enemigo.position().y()-1)))
 	}
 	
+	
 	method terminarSiCorresponde(){
-		if(enemigos.isEmpty()){self.terminar()}
+		//Termina el juego cuando ganamos
+		if(enemigos.isEmpty()){self.ganar()}
 	}
 	
+	method ganar(){
+		self.terminar()
+		keyboard.c().onPressDo{self.limpiarTablero();escenas.menuPrincipal()}
+	}
+	
+	
+	method cargarVidas(){
+			vidas.clear()
+			vidas.addAll(self.vidasTotales())
+			vidas.forEach({v=>v.aparecer()})
+	}
 }
 	
 
@@ -154,22 +163,28 @@ object escenas {
 	}
 	
 	method primerNivel(){
-
+		//var nivelJugado = false
+			
+		juego.limpiarTablero()
 		juego.cargarControles()
 //		self.cargarSonido()
 		juego.cargarUsuario()
 		juego.modelarEnemigos()
 		juego.cargarVidas()
+		scoreJuego.addVisual()
+		
 	}
 	
 	method segundoNivel(){
-
+		
+		juego.limpiarTablero()
 		juego.cargarControles()
 //		self.cargarSonido()
 		juego.cargarUsuario()
 		juego.modelarEnemigos()
 		juego.agregarAsteroides()
 		juego.cargarVidas()
+		scoreJuego.addVisual()
 
 	}
 	

@@ -39,11 +39,11 @@ class Asteroide {
 }
 
 object 	aparecerAsteroides {
-	const  property asteroides = [new Asteroide(position=game.at(2,10)),
-		new Asteroide(position=game.at(4,10)) ,	
-		new Asteroide(position=game.at(6,8)) ,
-		new Asteroide(position=game.at(8,11)), 
-		new Asteroide(position=game.at(10,5)) ]
+	const  property asteroides = [new Asteroide(position=game.at(1,9)),
+		new Asteroide(position=game.at(3,10)) ,	
+		new Asteroide(position=game.at(5,8)) ,
+		new Asteroide(position=game.at(7,11)), 
+		new Asteroide(position=game.at(9,5)) ]
 	
 	method generarAsteriodes(){
 		asteroides.forEach{e=>e.aparecer()}
