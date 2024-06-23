@@ -1,10 +1,8 @@
 import wollok.game.*
 
-class Caracter {
+class Visual {
 	var position = new Position(x=0, y=0)
-	
-	// indica si ese objeto provoca daño cuando colisiona con felix
-	const property haceDanio = false
+	method image()
 
 	method position() = position
 	method position(nuevaPosicion) {
@@ -25,13 +23,6 @@ class Caracter {
 			game.removeVisual(self)		
 		}
 	}
-}
-
-class Visual inherits Caracter {
-	
-	method image()
-//	method image(nuevaImagen)
-	
 }
 
 // Score Final

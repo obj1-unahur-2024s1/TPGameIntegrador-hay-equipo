@@ -9,7 +9,6 @@ import score.*
 
 object juego {
 	
-	
 	const property enemigos=[]
 	const property asteroides = []
 	const property vidas = []
@@ -20,14 +19,11 @@ object juego {
 
 	method puntaje()=puntaje
 
-	
 	method iniciar(){		
-	
 		self.tablero()
 		escenas.pantallaInicio()
 		self.cargarSonido()
 		game.start()
-	
 	}
 	
 	method tablero(){
@@ -37,7 +33,6 @@ object juego {
 		game.boardGround("fondo.png")
 	}
 	method cargarControles(){
-			
 		keyboard.left().onPressDo {naveDelJugador.moverIzquierda()}
 		keyboard.right().onPressDo {naveDelJugador.moverDerecha()}
 		keyboard.up().onPressDo {self.disparar()}
@@ -67,14 +62,12 @@ object juego {
 	
 	method cargarUsuario(){
 		game.addVisual(naveDelJugador)
-
 	}
 	
 	method agregarAsteroides(){
 		
 		aparecerAsteroides.generarAsteriodes()
 		asteroides.addAll(aparecerAsteroides.asteroides() )
-		
 		game.onTick(200, "Avanza asteroide", {asteroides.forEach({ a=> a.bajar()})})
 
 	}
@@ -84,16 +77,11 @@ object juego {
 		game.sound("sonido/balazo.mp3").play()
 	}
 	
-	
 	method terminar(){
 		//Termina si nos matan
 		self.limpiarTablero()
 		self.agregarVisualFinal()
-		//game.addVisual(new Texto(text = self.puntaje().toString(),
-		//	 position = game.center()))
 		scoreFinal.addVisual()
-		
-		
 	}
 	
 	method agregarVisualFinal(){
@@ -110,7 +98,6 @@ object juego {
 		vidas.remove(vidas.last())
 		game.sound("sonido/perder.mp3").play()
 		self.cambiarVisualDelJugador()
-		
 	}
 	
 	method cambiarVisualDelJugador(){
@@ -138,67 +125,9 @@ object juego {
 		keyboard.c().onPressDo{self.limpiarTablero();escenas.menuPrincipal()}
 	}
 	
-	
 	method cargarVidas(){
 			vidas.clear()
 			vidas.addAll(self.vidasTotales())
 			vidas.forEach({v=>v.aparecer()})
 	}
-}
-	
-
-object escenas {
-	
-	method pantallaInicio(){
-		game.addVisual(inicio)
-		keyboard.enter().onPressDo{juego.limpiarTablero(); self.menuPrincipal() }
-	}
-	
-	method menuPrincipal(){
-		game.addVisual(menu)
-		keyboard.num1().onPressDo{juego.limpiarTablero(); self.primerNivel() }
-		keyboard.num2().onPressDo{juego.limpiarTablero(); self.segundoNivel()}
-		keyboard.t().onPressDo {juego.limpiarTablero(); self.verTutorial()}
-		keyboard.backspace().onPressDo {game.stop()}
-	}
-	
-	method primerNivel(){
-		//var nivelJugado = false
-			
-		juego.limpiarTablero()
-		juego.cargarControles()
-//		self.cargarSonido()
-		juego.cargarUsuario()
-		juego.modelarEnemigos()
-		juego.cargarVidas()
-		scoreJuego.addVisual()
-		
-	}
-	
-	method segundoNivel(){
-		
-		juego.limpiarTablero()
-		juego.cargarControles()
-//		self.cargarSonido()
-		juego.cargarUsuario()
-		juego.modelarEnemigos()
-		juego.agregarAsteroides()
-		juego.cargarVidas()
-		scoreJuego.addVisual()
-
-	}
-	
-	method verTutorial(){
-		juego.limpiarTablero()
-		game.addVisual(tutorial)
-		keyboard.c().onPressDo {juego.limpiarTablero(); self.menuPrincipal() }
-	}
-	
-	method perdiste(){
-		juego.limpiarTablero()
-		game.addVisual(gameOver)
-		keyboard.c().onPressDo {juego.limpiarTablero(); self.menuPrincipal()}
-	}
-	
-
 }

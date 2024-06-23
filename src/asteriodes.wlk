@@ -9,9 +9,6 @@ class Asteroide {
 	
 	method puedeMorir() = false
 	
-//	method initialize(){
-//		self.desplazar()	}
-	
 	method aparecer()=game.addVisual(self)
 	
 	method bajar(){
@@ -49,6 +46,3 @@ object 	aparecerAsteroides {
 		asteroides.forEach{e=>e.aparecer()}
 	}
 }
-
-
-	

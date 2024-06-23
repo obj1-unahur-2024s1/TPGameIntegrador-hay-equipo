@@ -1,7 +1,6 @@
 import asteriodes.*
 import balas.*
 import juego.*
-//import niveles.*
 import pantallas.*
 import personajes.*
 import wollok.game.*
@@ -35,15 +34,6 @@ describe "Test del juego"{
 		const posAnterior = naveDelJugador.position()
 		naveDelJugador.moverIzquierda()
 		assert.equals(posAnterior.left(1), naveDelJugador.position())
-	}/*
-	 * 
-	test "Se puede mover a la derecha la nave del jugador"{
-		
-		const posAnterior = naveDelJugador.position()
-		assert.equals(5, naveDelJugador.position().x())
-		naveDelJugador.moverDerecha()
-		assert.equals(6, naveDelJugador.position().x())
 	}
-	 */
 	
 }
