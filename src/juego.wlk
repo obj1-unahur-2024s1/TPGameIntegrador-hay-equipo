@@ -9,9 +9,9 @@ import score.*
 
 object juego {
 	
-	const property enemigos=[]
-	const property asteroides = []
-	const property vidas = []
+	var property enemigos=[]
+	var property asteroides = []
+	var property vidas = []
 	var property puntaje = 0
 	method vidas()=vidas.size()
 	
@@ -49,9 +49,9 @@ object juego {
 	}
 	
 	method modelarEnemigos(){
-		self.enemigos().removeAll(enemigos)
 		aparecerEnemigos.generarEnemigos()
 		enemigos.addAll(aparecerEnemigos.enemigos())
+		aparecerEnemigos.vaciarEnemigos()
 		
 		game.onTick(4000, "bajar Enemigos", {enemigos.forEach({ e => e.bajar()})})
 		game.onTick(1000, "mover Enemigos", {enemigos.forEach({ e => e.mover()})})
@@ -65,7 +65,6 @@ object juego {
 	}
 	
 	method agregarAsteroides(){
-		
 		aparecerAsteroides.generarAsteriodes()
 		asteroides.addAll(aparecerAsteroides.asteroides() )
 		game.onTick(200, "Avanza asteroide", {asteroides.forEach({ a=> a.bajar()})})
@@ -78,17 +77,11 @@ object juego {
 	}
 	
 	method terminar(){
-		//Termina si nos matan
-		enemigos.forEach({enemigo =>
-			enemigo.posicion(enemigo.posicionOriginal());
-			game.removeVisual(enemigo)
-			
-		})
 		self.limpiarTablero()
 		self.agregarVisualFinal()
 		scoreFinal.addVisual()
-		keyboard.c().onPressDo{self.limpiarTablero();escenas.menuPrincipal()}
-		
+		keyboard.c().onPressDo{game.clear() ; escenas.menuPrincipal()}
+
 	}
 	
 	method agregarVisualFinal(){
@@ -129,12 +122,13 @@ object juego {
 	
 	method ganar(){
 		self.terminar()
-		keyboard.c().onPressDo{self.limpiarTablero();escenas.menuPrincipal()}
+		keyboard.c().onPressDo{escenas.menuPrincipal()}
 	}
 	
 	method cargarVidas(){
-			vidas.clear()
 			vidas.addAll(self.vidasTotales())
 			vidas.forEach({v=>v.aparecer()})
 	}
+	
+
 }

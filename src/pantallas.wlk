@@ -29,14 +29,12 @@ object escenas {
 		keyboard.num1().onPressDo{juego.limpiarTablero(); self.primerNivel() }
 		keyboard.num2().onPressDo{juego.limpiarTablero(); self.segundoNivel()}
 		keyboard.t().onPressDo {juego.limpiarTablero(); self.verTutorial()}
-		keyboard.backspace().onPressDo {game.stop()}
+//		keyboard.backspace().onPressDo {game.stop()}
 	}
 	
 	method primerNivel(){
-			
 		juego.limpiarTablero()
 		juego.cargarControles()
-
 		juego.cargarUsuario()
 		juego.modelarEnemigos()
 		juego.cargarVidas()
@@ -45,10 +43,8 @@ object escenas {
 	}
 	
 	method segundoNivel(){
-		
 		juego.limpiarTablero()
 		juego.cargarControles()
-
 		juego.cargarUsuario()
 		juego.modelarEnemigos()
 		juego.agregarAsteroides()

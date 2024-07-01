@@ -26,7 +26,9 @@ class Asteroide {
 	}
 	
 	method impactaSiHayNave(){
-		if (position.y() == 1 and game.getObjectsIn(position).size()>1 and game.getObjectsIn(position).contains(naveDelJugador)){
+		if (position == naveDelJugador.posicion()
+			
+		){
 			juego.removerVida()
 		}
 	}

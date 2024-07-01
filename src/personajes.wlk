@@ -101,6 +101,10 @@ object aparecerEnemigos{
 	method enemigos()=enemigos 
 	method listaDePosiciones()=[1,2,3,4,5,6,7,8]
 	
+	method vaciarEnemigos(){
+		enemigos.clear()
+	}
+	
 	method generarAliensEnFila(fila){
 		
 		const lista= self.listaDePosiciones()
