@@ -1,5 +1,6 @@
 import wollok.game.*
 import juego.*
+import personajes.*
 
 
 class Asteroide {
@@ -25,7 +26,7 @@ class Asteroide {
 	}
 	
 	method impactaSiHayNave(){
-		if (position.y() == 1 and game.getObjectsIn(position).size()>1){
+		if (position.y() == 1 and game.getObjectsIn(position).size()>1 and game.getObjectsIn(position).contains(naveDelJugador)){
 			juego.removerVida()
 		}
 	}

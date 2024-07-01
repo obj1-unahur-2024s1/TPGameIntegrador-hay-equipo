@@ -42,7 +42,7 @@ class Bala {
 	method impactar(){
 		  //game.onCollideDo(self, {elemento => elemento.morir(); self.morir()})
 		  if(game.hasVisual(self)){
-			  game.onCollideDo(self, {elemento => if(elemento.puedeMorir()){elemento.morir()}; self.morir()})
+			  game.onCollideDo(self, {elemento => if(elemento.puedeMorir() ){elemento.morir()}; self.morir()})
 		  	
 		  }
 	}
@@ -99,7 +99,7 @@ class BalaEnemiga {
 	method morir(){}
 	
 	method impactaSiHayNave(){
-		if (position.y() == 1 and game.getObjectsIn(position).size()>1){
+		if (position.y() == 1 and game.getObjectsIn(position).size()>1 and game.getObjectsIn(position).contains(naveDelJugador)){
 			juego.removerVida()
 		}
 	}

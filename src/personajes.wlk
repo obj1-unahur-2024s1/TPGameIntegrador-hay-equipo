@@ -5,6 +5,8 @@ import score.*
 
 class Personaje {
 	var property posicion
+	const posicionOriginal = posicion
+	method posicionOriginal() = posicionOriginal
 	
 	method position()= posicion
 	

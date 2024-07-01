@@ -79,9 +79,16 @@ object juego {
 	
 	method terminar(){
 		//Termina si nos matan
+		enemigos.forEach({enemigo =>
+			enemigo.posicion(enemigo.posicionOriginal());
+			game.removeVisual(enemigo)
+			
+		})
 		self.limpiarTablero()
 		self.agregarVisualFinal()
 		scoreFinal.addVisual()
+		keyboard.c().onPressDo{self.limpiarTablero();escenas.menuPrincipal()}
+		
 	}
 	
 	method agregarVisualFinal(){

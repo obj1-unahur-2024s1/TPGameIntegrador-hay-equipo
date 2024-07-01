@@ -33,11 +33,10 @@ object escenas {
 	}
 	
 	method primerNivel(){
-		//var nivelJugado = false
 			
 		juego.limpiarTablero()
 		juego.cargarControles()
-//		self.cargarSonido()
+
 		juego.cargarUsuario()
 		juego.modelarEnemigos()
 		juego.cargarVidas()
@@ -49,7 +48,7 @@ object escenas {
 		
 		juego.limpiarTablero()
 		juego.cargarControles()
-//		self.cargarSonido()
+
 		juego.cargarUsuario()
 		juego.modelarEnemigos()
 		juego.agregarAsteroides()
